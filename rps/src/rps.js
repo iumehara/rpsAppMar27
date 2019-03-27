@@ -25,10 +25,13 @@ class PlayRoundRequest {
             this.repo.save(new Round(this.p1Hand, this.p2Hand, 'invalid'))
             this.observer.noGame()
         } else if (this.tie()) {
+            this.repo.save(new Round(this.p1Hand, this.p2Hand, 'tie'))
             this.observer.draw()
         } else if (this.p2Wins()) {
+            this.repo.save(new Round(this.p1Hand, this.p2Hand, 'p2Wins'))
             this.observer.p2Wins()
         } else {
+            this.repo.save(new Round(this.p1Hand, this.p2Hand, 'p1Wins'))
             this.observer.p1Wins()
         }
     }

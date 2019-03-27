@@ -20,6 +20,42 @@ describe('playTest', () => {
                 new Round('rock', 'sailboat', 'invalid')
             )
         })
+
+        it('saves a p1Wins game result', () => {
+            let observer = jasmine.createSpyObj('observer', ['p1Wins'])
+
+
+            new Requests().play('rock', 'scissors', observer, spyRepo)
+
+
+            expect(spyRepo.save).toHaveBeenCalledWith(
+                new Round('rock', 'scissors', 'p1Wins')
+            )
+        })
+
+        it('saves a p2Wins game result', () => {
+            let observer = jasmine.createSpyObj('observer', ['p2Wins'])
+
+
+            new Requests().play('scissors', 'rock', observer, spyRepo)
+
+
+            expect(spyRepo.save).toHaveBeenCalledWith(
+                new Round('scissors', 'rock', 'p2Wins')
+            )
+        })
+
+        it('saves a tie game result', () => {
+            let observer = jasmine.createSpyObj('observer', ['draw'])
+
+
+            new Requests().play('scissors', 'scissors', observer, spyRepo)
+
+
+            expect(spyRepo.save).toHaveBeenCalledWith(
+                new Round('scissors', 'scissors', 'tie')
+            )
+        })
     })
 
     describe('p1 wins scenarios', () => {
@@ -29,19 +65,19 @@ describe('playTest', () => {
 
         it('play rock and scissors', () => {
             let requests = new Requests()
-            requests.play('rock', 'scissors', observer)
+            requests.play('rock', 'scissors', observer, spyRepo)
             expect(observer.p1Wins).toHaveBeenCalled()
         })
 
         it('play paper and rock', () => {
             let requests = new Requests()
-            requests.play('paper', 'rock', observer)
+            requests.play('paper', 'rock', observer, spyRepo)
             expect(observer.p1Wins).toHaveBeenCalled()
         })
 
         it('play scissors and paper', () => {
             let requests = new Requests()
-            requests.play('scissors', 'paper', observer)
+            requests.play('scissors', 'paper', observer, spyRepo)
             expect(observer.p1Wins).toHaveBeenCalled()
         })
     })
@@ -52,19 +88,19 @@ describe('playTest', () => {
 
         it('play scissors and rock', () => {
             let requests = new Requests()
-            requests.play('scissors', 'rock', observer)
+            requests.play('scissors', 'rock', observer, spyRepo)
             expect(observer.p2Wins).toHaveBeenCalled()
         })
 
         it('play rock and paper', () => {
             let requests = new Requests()
-            requests.play('rock', 'paper', observer)
+            requests.play('rock', 'paper', observer, spyRepo)
             expect(observer.p2Wins).toHaveBeenCalled()
         })
 
         it('play paper and scissors', () => {
             let requests = new Requests()
-            requests.play('paper', 'scissors', observer)
+            requests.play('paper', 'scissors', observer, spyRepo)
             expect(observer.p2Wins).toHaveBeenCalled()
         })
     })
@@ -76,19 +112,19 @@ describe('playTest', () => {
 
         it('both play scissors', () => {
             let requests = new Requests()
-            requests.play('scissors', 'scissors', observer)
+            requests.play('scissors', 'scissors', observer, spyRepo)
             expect(observer.draw).toHaveBeenCalled()
         })
 
         it('both play rock', () => {
             let requests = new Requests()
-            requests.play('rock', 'rock', observer)
+            requests.play('rock', 'rock', observer, spyRepo)
             expect(observer.draw).toHaveBeenCalled()
         })
 
         it('both play paper', () => {
             let requests = new Requests()
-            requests.play('rock', 'rock', observer)
+            requests.play('rock', 'rock', observer, spyRepo)
             expect(observer.draw).toHaveBeenCalled()
         })
     })
