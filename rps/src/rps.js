@@ -1,19 +1,43 @@
 class Requests {
-    play(p1hand, p2hand, observer) {
-        const validHands = ['scissors', 'rock', 'paper']
-        if (!validHands.includes(p1hand) ||
-            !validHands.includes(p2hand)) {
-            observer.noGame()
-        }  else if (p1hand === p2hand) {
-            observer.draw()
-        } else if (p1hand === 'scissors' && p2hand === 'rock' ||
-            p1hand === 'paper' && p2hand === 'scissors' ||
-            p1hand === 'rock' && p2hand === 'paper') {
-            observer.p2Wins()
-        } else {
-            observer.p1Wins()
-        }
+    play(p1Hand, p2Hand, observer) {
+        new PlayRoundRequest(p1Hand, p2Hand, observer).process()
     }
 }
 
-module.exports = {Requests}
+class PlayRoundRequest {
+    constructor(p1Hand, p2Hand, observer) {
+        this.p1Hand = p1Hand
+        this.p2Hand = p2Hand
+        this.observer = observer
+    }
+
+    process() {
+        if (this.invalidThrow(this.p1Hand) || this.invalidThrow(this.p2Hand)) {
+            this.observer.noGame()
+        } else if (this.tie()) {
+            this.observer.draw()
+        } else if (this.p2Wins()) {
+            this.observer.p2Wins()
+        } else {
+            this.observer.p1Wins()
+        }
+    }
+
+    tie() {
+        return this.p1Hand == this.p2Hand
+    }
+
+    p2Wins() {
+        return this.p1Hand === 'scissors' && this.p2Hand === 'rock' ||
+            this.p1Hand === 'paper' && this.p2Hand === 'scissors' ||
+            this.p1Hand === 'rock' && this.p2Hand === 'paper'
+    }
+
+    invalidThrow(hand) {
+        return !['scissors', 'rock', 'paper'].includes(hand)
+    }
+}
+
+module.exports = {
+    Requests
+}
