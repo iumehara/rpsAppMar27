@@ -3,8 +3,12 @@ class Requests {
         new PlayRoundRequest(p1Hand, p2Hand, observer, repo).process()
     }
 
-    fetchResults(observer) {
-        observer.noGame()
+    fetchResults(observer, repo) {
+        if (repo.isEmpty()) {
+            observer.noGame()
+        } else {
+            observer.rounds(repo.getAll())
+        }
     }
 }
 
