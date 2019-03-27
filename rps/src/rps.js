@@ -2,6 +2,10 @@ class Requests {
     play(p1Hand, p2Hand, observer, repo) {
         new PlayRoundRequest(p1Hand, p2Hand, observer, repo).process()
     }
+
+    fetchResults(observer) {
+        observer.noGame()
+    }
 }
 
 class Round {
