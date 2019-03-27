@@ -95,13 +95,13 @@ describe('playTest', () => {
 
         it('play inoshishi', () => {
             let requests = new Requests()
-            requests.play('scissors', 'inoshishi', observer)
+            requests.play('scissors', 'inoshishi', observer, spyRepo)
             expect(observer.noGame).toHaveBeenCalled()
         })
 
         it('play random', () => {
             let requests = new Requests()
-            requests.play('scissors', Math.random().toString(), observer)
+            requests.play('scissors', Math.random().toString(), observer, spyRepo)
             expect(observer.noGame).toHaveBeenCalled()
         })
     })

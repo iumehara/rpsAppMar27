@@ -1,18 +1,20 @@
 class Requests {
-    play(p1Hand, p2Hand, observer) {
-        new PlayRoundRequest(p1Hand, p2Hand, observer).process()
+    play(p1Hand, p2Hand, observer, repo) {
+        new PlayRoundRequest(p1Hand, p2Hand, observer, repo).process()
     }
 }
 
 class PlayRoundRequest {
-    constructor(p1Hand, p2Hand, observer) {
+    constructor(p1Hand, p2Hand, observer, repo) {
         this.p1Hand = p1Hand
         this.p2Hand = p2Hand
         this.observer = observer
+        this.repo = repo
     }
 
     process() {
         if (this.invalidThrow(this.p1Hand) || this.invalidThrow(this.p2Hand)) {
+            this.repo.save()
             this.observer.noGame()
         } else if (this.tie()) {
             this.observer.draw()
