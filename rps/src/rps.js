@@ -1,9 +1,9 @@
 class Requests {
     play(p1hand, p2hand, observer) {
-        const valid_hands = ['scissors', 'rock', 'paper'];
-        if (!valid_hands.includes(p1hand) ||
-            !valid_hands.includes(p2hand)) {
-            observer.invalid();
+        const validHands = ['scissors', 'rock', 'paper'];
+        if (!validHands.includes(p1hand) ||
+            !validHands.includes(p2hand)) {
+            observer.noGame();
         }  else if (p1hand === p2hand) {
             observer.draw();
         } else if (p1hand === 'scissors' && p2hand === 'rock' ||

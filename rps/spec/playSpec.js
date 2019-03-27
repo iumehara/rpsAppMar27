@@ -73,21 +73,21 @@ describe('playTest', () => {
         });
     });
 
-    describe('invalid scenarios', () => {
+    describe('no game scenarios', () => {
         beforeEach(() => {
-            observer = jasmine.createSpyObj('observer', ['invalid']);
+            observer = jasmine.createSpyObj('observer', ['noGame']);
         });
 
         it('play inoshishi', () => {
             let requests = new Requests();
             requests.play('scissors', 'inoshishi', observer);
-            expect(observer.invalid).toHaveBeenCalled();
+            expect(observer.noGame).toHaveBeenCalled();
         });
 
         it('play random', () => {
             let requests = new Requests();
             requests.play('scissors', Math.random().toString(), observer);
-            expect(observer.invalid).toHaveBeenCalled();
+            expect(observer.noGame).toHaveBeenCalled();
         });
     });
 });
