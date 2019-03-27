@@ -2,6 +2,21 @@ const {Requests} = require('../src/rps')
 
 describe('playTest', () => {
     let observer
+    let spyRepo
+
+    beforeEach(() => {
+        spyRepo = jasmine.createSpyObj('repo', ['save'])
+    })
+
+    describe('saving after playing rounds', () => {
+        it('saves an invalid game result', () => {
+            let observer = jasmine.createSpyObj('observer', ['noGame'])
+            let requests = new Requests()
+            requests.play('rock', 'sailboat', observer, spyRepo)
+            expect(spyRepo.save).toHaveBeenCalled()
+        })
+    })
+
     describe('p1 wins scenarios', () => {
         beforeEach(() => {
             observer = jasmine.createSpyObj('observer', ['p1Wins'])
