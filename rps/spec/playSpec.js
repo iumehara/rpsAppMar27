@@ -1,4 +1,4 @@
-const {Requests} = require('../src/rps')
+const {Requests, Round} = require('../src/rps')
 
 describe('playTest', () => {
     let observer

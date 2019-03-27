@@ -4,6 +4,14 @@ class Requests {
     }
 }
 
+class Round {
+    constructor(p1Hand, p2Hand, result) {
+        this.p1Hand = p1Hand
+        this.p2Hand = p2Hand
+        this.result = result
+    }
+}
+
 class PlayRoundRequest {
     constructor(p1Hand, p2Hand, observer, repo) {
         this.p1Hand = p1Hand
@@ -14,7 +22,7 @@ class PlayRoundRequest {
 
     process() {
         if (this.invalidThrow(this.p1Hand) || this.invalidThrow(this.p2Hand)) {
-            this.repo.save()
+            this.repo.save(new Round(this.p1Hand, this.p2Hand, 'invalid'))
             this.observer.noGame()
         } else if (this.tie()) {
             this.observer.draw()
@@ -41,5 +49,6 @@ class PlayRoundRequest {
 }
 
 module.exports = {
-    Requests
+    Requests,
+    Round
 }
