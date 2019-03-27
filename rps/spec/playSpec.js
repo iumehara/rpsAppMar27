@@ -11,9 +11,14 @@ describe('playTest', () => {
     describe('saving after playing rounds', () => {
         it('saves an invalid game result', () => {
             let observer = jasmine.createSpyObj('observer', ['noGame'])
-            let requests = new Requests()
-            requests.play('rock', 'sailboat', observer, spyRepo)
-            expect(spyRepo.save).toHaveBeenCalled()
+
+
+            new Requests().play('rock', 'sailboat', observer, spyRepo)
+
+
+            expect(spyRepo.save).toHaveBeenCalledWith(
+                new Round('rock', 'sailboat', 'invalid')
+            )
         })
     })
 
