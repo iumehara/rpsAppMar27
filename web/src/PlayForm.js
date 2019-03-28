@@ -7,7 +7,7 @@ export default class PlayForm extends React.Component {
   }
 
   playButtonClicked() {
-    this.props.requests.playRound('', '', this)
+    this.props.requests.playRound(this.state.p1Hand, this.state.p2Hand, this)
   }
 
   p1Wins() {
@@ -26,10 +26,20 @@ export default class PlayForm extends React.Component {
     this.setState({result: 'No Game'})
   }
 
+  p1HandChanged(event) {
+    this.setState({p1Hand: event.target.value})
+  }
+
+  p2HandChanged(event) {
+    this.setState({p2Hand: event.target.value})
+  }
+
   render() {
     return (
       <div>
         <div>Play Game</div>
+        <input name='p1Hand' onChange={this.p1HandChanged.bind(this)}/>
+        <input name='p2Hand' onChange={this.p2HandChanged.bind(this)}/>
         <button onClick={this.playButtonClicked.bind(this)}>PLAY!</button>
         <div>{this.state.result}</div>
       </div>

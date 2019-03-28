@@ -1,6 +1,7 @@
 import ReactDOM from 'react-dom'
 import React from 'react'
 import PlayForm from '../src/PlayForm'
+import ReactTestUtils from 'react-dom/test-utils'
 
 describe('RPS App', function () {
   let domFixture
@@ -13,6 +14,13 @@ describe('RPS App', function () {
   afterEach(() => {
     domFixture.remove()
   })
+
+  function renderPlayForm(requests) {
+    ReactDOM.render(
+      <PlayForm requests={requests}/>,
+      domFixture
+    )
+  }
 
   it('displays title', () => {
     ReactDOM.render(
@@ -28,10 +36,7 @@ describe('RPS App', function () {
       playRound: (p1Hand, p2Hand, observer) => observer.p1Wins()
     }
 
-    ReactDOM.render(
-      <PlayForm requests={p1WinsStub}/>,
-      domFixture
-    )
+    renderPlayForm(p1WinsStub)
 
     expect(domFixture.innerText).not.toContain('Player 1 Wins!')
 
@@ -46,10 +51,7 @@ describe('RPS App', function () {
       playRound: (p1Hand, p2Hand, observer) => observer.p2Wins()
     }
 
-    ReactDOM.render(
-      <PlayForm requests={p2WinsStub}/>,
-      domFixture
-    )
+    renderPlayForm(p2WinsStub)
 
     expect(domFixture.innerText).not.toContain('Player 2 Wins!')
 
@@ -64,10 +66,7 @@ describe('RPS App', function () {
       playRound: (p1Hand, p2Hand, observer) => observer.draw()
     }
 
-    ReactDOM.render(
-      <PlayForm requests={drawStub}/>,
-      domFixture
-    )
+    renderPlayForm(drawStub)
 
     expect(domFixture.innerText).not.toContain('Draw')
 
@@ -82,16 +81,34 @@ describe('RPS App', function () {
       playRound: (p1Hand, p2Hand, observer) => observer.noGame()
     }
 
-    ReactDOM.render(
-      <PlayForm requests={noGameStub}/>,
-      domFixture
-    )
+    renderPlayForm(noGameStub)
 
     expect(domFixture.innerText).not.toContain('No Game')
 
     domFixture.querySelector('button').click()
 
     expect(domFixture.innerText).toContain('No Game')
+
+  })
+
+  it('sends p1 hand and p2 hand to playRound', () => {
+    const playRoundSpy = jasmine.createSpy('playRound');
+    const requests = {
+      playRound: playRoundSpy
+    }
+    renderPlayForm(requests)
+
+    const p1Input = document.querySelector('input[name="p1Hand"]')
+    p1Input.value = 'rock'
+    ReactTestUtils.Simulate.change(p1Input)
+    const p2Input = document.querySelector('input[name="p2Hand"]')
+    p2Input.value = 'scissors'
+    ReactTestUtils.Simulate.change(p2Input)
+
+    domFixture.querySelector('button').click()
+
+    expect(playRoundSpy)
+      .toHaveBeenCalledWith('rock', 'scissors', jasmine.any(Object))
 
   })
 
