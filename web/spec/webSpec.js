@@ -32,7 +32,7 @@
 
       it('displays Player 1 Wins! if p1Wins is called', () => {
         const p1WinsStub = {
-          playRound: (p1Hand, p2Hand, observer) => observer.p1Wins()
+          play: (p1Hand, p2Hand, observer) => observer.p1Wins()
         };
 
         renderPlayForm(p1WinsStub);
@@ -45,7 +45,7 @@
 
       it('displays Player 2 Wins! if p2Wins is called', () => {
         const p2WinsStub = {
-          playRound: (p1Hand, p2Hand, observer) => observer.p2Wins()
+          play: (p1Hand, p2Hand, observer) => observer.p2Wins()
         };
 
         renderPlayForm(p2WinsStub);
@@ -58,7 +58,7 @@
 
       it('displays Draw! if draw is called', () => {
         const drawStub = {
-          playRound: (p1Hand, p2Hand, observer) => observer.draw()
+          play: (p1Hand, p2Hand, observer) => observer.draw()
         };
 
         renderPlayForm(drawStub);
@@ -71,7 +71,7 @@
 
       it('displays NoGame! if noGame is called', () => {
         const noGameStub = {
-          playRound: (p1Hand, p2Hand, observer) => observer.noGame()
+          play: (p1Hand, p2Hand, observer) => observer.noGame()
         };
 
         renderPlayForm(noGameStub);
@@ -85,9 +85,9 @@
 
     describe('Request', function () {
       it('send p1 hand and p2 hand to rps', () => {
-        const playRoundSpy = jasmine.createSpy('playRound');
+        const playRoundSpy = jasmine.createSpy('play');
         const requests = {
-          playRound: playRoundSpy
+          play: playRoundSpy
         }
 
         renderPlayForm(requests)

@@ -1,6 +1,5 @@
 import React from 'react'
 
-
 export default class PlayForm extends React.Component {
     constructor(props) {
         super(props)
@@ -9,7 +8,7 @@ export default class PlayForm extends React.Component {
 
     playButtonClicked() {
         // this.setState({result: 'Player 1 Wins!'})
-        this.props.requests.playRound(this.state.p1Hand, this.state.p2Hand, this);
+        this.props.requests.play(this.state.p1Hand, this.state.p2Hand, this);
     }
 
     p1Wins() {
