@@ -18,6 +18,7 @@ describe('RPS App', function () {
     domFixture.remove();
   })
 
+
   it('display title', () => {
     ReactDOM.render(
         <PlayForm/>,
@@ -26,4 +27,65 @@ describe('RPS App', function () {
 
     expect(domFixture.innerText).toContain('Play Game');
   })
+
+
+  it('displays Player 1 Wins! if p1Wins is called', () => {
+    const p1WinsStub = {
+      playRound: (p1Hand, p2Hand, observer) => observer.p1Wins()
+    };
+
+    renderPlayForm(p1WinsStub);
+
+    expect(domFixture.innerText).not.toContain('Player 1 Wins!');
+    domFixture.querySelector('button').click();
+
+    expect(domFixture.innerText).toContain('Player 1 Wins!');
+  })
+
+  it('displays Player 2 Wins! if p2Wins is called', () => {
+    const p2WinsStub = {
+      playRound: (p1Hand, p2Hand, observer) => observer.p2Wins()
+    };
+
+    renderPlayForm(p2WinsStub);
+
+    expect(domFixture.innerText).not.toContain('Player 2 Wins!');
+    domFixture.querySelector('button').click();
+
+    expect(domFixture.innerText).toContain('Player 2 Wins!');
+  })
+
+  it('displays Draw! if draw is called', () => {
+    const drawStub = {
+      playRound: (p1Hand, p2Hand, observer) => observer.draw()
+    };
+
+    renderPlayForm(drawStub);
+
+    expect(domFixture.innerText).not.toContain('Draw!');
+    domFixture.querySelector('button').click();
+
+    expect(domFixture.innerText).toContain('Draw!');
+  })
+
+  it('displays NoGame! if noGame is called', () => {
+    const noGameStub = {
+      playRound: (p1Hand, p2Hand, observer) => observer.noGame()
+    };
+
+    renderPlayForm(noGameStub);
+
+    expect(domFixture.innerText).not.toContain('No Game!');
+    domFixture.querySelector('button').click();
+
+    expect(domFixture.innerText).toContain('No Game!');
+  })
+
+  function renderPlayForm(p1WinsStub) {
+    ReactDOM.render(
+        <PlayForm requests={p1WinsStub}/>,
+        domFixture
+    )
+  }
+
 })
