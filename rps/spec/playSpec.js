@@ -10,7 +10,7 @@ describe('playTest', () => {
     let observer = jasmine.createSpyObj('observer', ['p1Wins'])
 
     let requests = new Requests()
-    requests.play('rock', 'scissors', observer)
+    requests.playRound('rock', 'scissors', observer)
     expect(observer.p1Wins).toHaveBeenCalled()
   })
 
@@ -18,7 +18,7 @@ describe('playTest', () => {
     let observer = jasmine.createSpyObj('observer', ['p2Wins'])
 
     let requests = new Requests()
-    requests.play('scissors', 'rock', observer)
+    requests.playRound('scissors', 'rock', observer)
     expect(observer.p2Wins).toHaveBeenCalled()
   })
 
@@ -26,7 +26,7 @@ describe('playTest', () => {
     let observer = jasmine.createSpyObj('observer', ['draw'])
 
     let requests = new Requests()
-    requests.play('scissors', 'scissors', observer)
+    requests.playRound('scissors', 'scissors', observer)
     expect(observer.draw).toHaveBeenCalled()
   })
 
@@ -34,7 +34,7 @@ describe('playTest', () => {
     let observer = jasmine.createSpyObj('observer', ['p1Wins'])
 
     let requests = new Requests()
-    requests.play('paper', 'rock', observer)
+    requests.playRound('paper', 'rock', observer)
     expect(observer.p1Wins).toHaveBeenCalled()
   })
 
@@ -42,7 +42,7 @@ describe('playTest', () => {
     let observer = jasmine.createSpyObj('observer', ['p2Wins'])
 
     let requests = new Requests()
-    requests.play('rock', 'paper', observer)
+    requests.playRound('rock', 'paper', observer)
     expect(observer.p2Wins).toHaveBeenCalled()
   })
 
@@ -50,7 +50,7 @@ describe('playTest', () => {
     let observer = jasmine.createSpyObj('observer', ['draw'])
 
     let requests = new Requests()
-    requests.play('rock', 'rock', observer)
+    requests.playRound('rock', 'rock', observer)
     expect(observer.draw).toHaveBeenCalled()
   })
 
@@ -58,7 +58,7 @@ describe('playTest', () => {
     let observer = jasmine.createSpyObj('observer', ['p1Wins'])
 
     let requests = new Requests()
-    requests.play('scissors', 'paper', observer)
+    requests.playRound('scissors', 'paper', observer)
     expect(observer.p1Wins).toHaveBeenCalled()
 
   })
@@ -66,7 +66,7 @@ describe('playTest', () => {
   it('returns player 2 wins when play is called with paper and scissors', () => {
     let observer = jasmine.createSpyObj('observer', ['p2Wins'])
     let requests = new Requests()
-    requests.play('paper', 'scissors', observer)
+    requests.playRound('paper', 'scissors', observer)
     expect(observer.p2Wins).toHaveBeenCalled()
   })
 
@@ -74,7 +74,7 @@ describe('playTest', () => {
     let observer = jasmine.createSpyObj('observer', ['draw'])
 
     let requests = new Requests()
-    requests.play('paper', 'paper', observer)
+    requests.playRound('paper', 'paper', observer)
     expect(observer.draw).toHaveBeenCalled()
   })
 
@@ -82,7 +82,7 @@ describe('playTest', () => {
     let observer = jasmine.createSpyObj('observer', ['noGame'])
 
     let requests = new Requests()
-    requests.play('rock', 'unknown', observer)
+    requests.playRound('rock', 'unknown', observer)
     expect(observer.noGame).toHaveBeenCalled()
   })
 

@@ -1,5 +1,5 @@
 class Requests {
-  play(p1Hand, p2Hand, observer) {
+  playRound(p1Hand, p2Hand, observer) {
     new PlayRoundRequest(p1Hand, p2Hand, observer).process()
   }
 }
