@@ -31,7 +31,7 @@ describe('RPS App', function () {
 
   it('displays Player 1 Wins! if p1Wins is called', () => {
     const p1WinsStub = {
-      playRound: (p1Hand, p2Hand, observer) => observer.p1Wins()
+      play: (p1Hand, p2Hand, observer) => observer.p1Wins()
     }
     renderPlayForm(p1WinsStub)
 
@@ -43,7 +43,7 @@ describe('RPS App', function () {
 
   it('displays Player 2 Wins! if p2Wins is called', () => {
     const p2WinsStub = {
-      playRound: (p1Hand, p2Hand, observer) => observer.p2Wins()
+      play: (p1Hand, p2Hand, observer) => observer.p2Wins()
     }
     renderPlayForm(p2WinsStub)
 
@@ -55,7 +55,7 @@ describe('RPS App', function () {
 
   it('displays Draw! if draw is called', () => {
     const drawStub = {
-      playRound: (p1Hand, p2Hand, observer) => observer.draw()
+      play: (p1Hand, p2Hand, observer) => observer.draw()
     }
     renderPlayForm(drawStub)
 
@@ -67,7 +67,7 @@ describe('RPS App', function () {
 
   it('displays No Game! if noGame is called', () => {
     const drawStub = {
-      playRound: (p1Hand, p2Hand, observer) => observer.noGame()
+      play: (p1Hand, p2Hand, observer) => observer.noGame()
     }
     renderPlayForm(drawStub)
 
@@ -77,10 +77,10 @@ describe('RPS App', function () {
     expect(domFixture.innerText).toContain('No Game!')
   })
 
-  it('sends p1 hand and p2 hand to playRound', () => {
-    const playRoundSpy = jasmine.createSpy('playRound');
+  it('sends p1 hand and p2 hand to play', () => {
+    const playSpy = jasmine.createSpy('play');
     const requests = {
-      playRound: playRoundSpy
+      play: playSpy
     }
     renderPlayForm(requests)
 
@@ -96,7 +96,7 @@ describe('RPS App', function () {
     domFixture.querySelector('button').click()
 
 
-    expect(playRoundSpy)
+    expect(playSpy)
         .toHaveBeenCalledWith('rock', 'scissors', jasmine.any(Object))
   })
 })

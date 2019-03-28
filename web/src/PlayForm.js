@@ -23,7 +23,7 @@ export default class PlayForm extends React.Component {
     }
 
     playButtonClicked() {
-        this.props.requests.playRound(this.state.p1Hand, this.state.p2Hand, this)
+        this.props.requests.play(this.state.p1Hand, this.state.p2Hand, this)
     }
 
     inputChanged(event) {
