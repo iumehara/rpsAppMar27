@@ -1,6 +1,7 @@
 import ReactDOM from "react-dom"
 import React from 'react'
 import PlayForm from "../src/PlayForm";
+import ReactTestUtils from 'react-dom/test-utils'
 
 describe('RPS App', function () {
   let domFixture
@@ -74,5 +75,28 @@ describe('RPS App', function () {
     domFixture.querySelector('button').click()
 
     expect(domFixture.innerText).toContain('No Game!')
+  })
+
+  it('sends p1 hand and p2 hand to playRound', () => {
+    const playRoundSpy = jasmine.createSpy('playRound');
+    const requests = {
+      playRound: playRoundSpy
+    }
+    renderPlayForm(requests)
+
+
+    const p1Input = document.querySelector('input[name="p1Hand"]')
+    p1Input.value = 'rock'
+    ReactTestUtils.Simulate.change(p1Input)
+
+    const p2Input = document.querySelector('input[name="p2Hand"]')
+    p2Input.value = 'scissors'
+    ReactTestUtils.Simulate.change(p2Input)
+
+    domFixture.querySelector('button').click()
+
+
+    expect(playRoundSpy)
+        .toHaveBeenCalledWith('rock', 'scissors', jasmine.any(Object))
   })
 })
