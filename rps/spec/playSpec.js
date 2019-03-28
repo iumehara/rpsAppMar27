@@ -5,7 +5,7 @@ describe('playTest', () => {
     let observer;
 
     beforeEach(() => {
-        observer = jasmine.createSpyObj('observer', ['p1Wins', 'p2Wins', 'draw']);
+        observer = jasmine.createSpyObj('observer', ['p1Wins', 'p2Wins', 'draw', 'noGame']);
     });
 
     it('return draw when play is called with rock and rock', () => {
@@ -62,8 +62,23 @@ describe('playTest', () => {
         expectedDraw(observer);
     })
 
+    it('return noGame when play is called with paper and kirin', () => {
+        let requests = new Requests();
+        requests.play('paper', 'kirin', observer);
+        expectedNoGame(observer);
+    })
 
+    it('return noGame when play is called with kirin and paper', () => {
+        let requests = new Requests();
+        requests.play('kirin', 'paper', observer);
+        expectedNoGame(observer);
+    })
 
+    it('return noGame when play is called with kirin and kirin', () => {
+        let requests = new Requests();
+        requests.play('kirin', 'kirin', observer);
+        expectedNoGame(observer);
+    })
 
 });
 
@@ -71,17 +86,27 @@ function expectedP1Wins(observer) {
     expect(observer.p1Wins).toHaveBeenCalled();
     expect(observer.p2Wins).not.toHaveBeenCalled();
     expect(observer.draw).not.toHaveBeenCalled();
+    expect(observer.noGame).not.toHaveBeenCalled();
 }
 
 function expectedP2Wins(observer) {
     expect(observer.p1Wins).not.toHaveBeenCalled();
     expect(observer.p2Wins).toHaveBeenCalled();
     expect(observer.draw).not.toHaveBeenCalled();
+    expect(observer.noGame).not.toHaveBeenCalled();
 }
 
 function expectedDraw(observer) {
     expect(observer.p1Wins).not.toHaveBeenCalled();
     expect(observer.p2Wins).not.toHaveBeenCalled();
     expect(observer.draw).toHaveBeenCalled();
+    expect(observer.noGame).not.toHaveBeenCalled();
+}
+
+function expectedNoGame(observer) {
+    expect(observer.p1Wins).not.toHaveBeenCalled();
+    expect(observer.p2Wins).not.toHaveBeenCalled();
+    expect(observer.draw).not.toHaveBeenCalled();
+    expect(observer.noGame).toHaveBeenCalled();
 }
 
