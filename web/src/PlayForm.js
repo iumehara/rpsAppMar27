@@ -3,7 +3,9 @@ import React from "react"
 export default class PlayForm extends React.Component {
     constructor(props) {
         super(props)
-        this.state = {}
+        this.state = {
+            rounds: [],
+        }
     }
 
     p1Wins() {
@@ -18,12 +20,20 @@ export default class PlayForm extends React.Component {
         this.setState({result: 'Draw!'})
     }
 
+    rounds(roundList) {
+        this.setState({rounds: roundList});
+    }
+
     noGame() {
         this.setState({result: 'No Game!'})
     }
 
     playButtonClicked() {
         this.props.requests.play(this.state.p1Hand, this.state.p2Hand, this)
+    }
+
+    historyButtonClicked() {
+        this.props.requests.fetchRounds(this)
     }
 
     inputChanged(event) {
@@ -38,6 +48,16 @@ export default class PlayForm extends React.Component {
                 <input name='p2Hand' onChange={this.inputChanged.bind(this)}/>
                 <button onClick={this.playButtonClicked.bind(this)}>PLAY!</button>
                 <div>{this.state.result}</div>
+                <h2>History</h2>
+                <button className='history'
+                        onClick={this.historyButtonClicked.bind(this)}>
+                    update
+                </button>
+                <div>{this.state.rounds.map((round, index) => (
+                    <p key={index}>
+                        {round.p1Hand} {round.p2Hand} {round.result}
+                    </p>
+                ))}</div>
             </div>
         )
     }

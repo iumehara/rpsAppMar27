@@ -3,10 +3,10 @@ const {FakeHistoryRepo} = require('../src/fakeHistoryRepo')
 
 describe('playTest', () => {
     let observer
-    let spyRepo
+    let fakeRepo
 
     beforeEach(() => {
-        spyRepo = jasmine.createSpyObj('repo', ['save'])
+        fakeRepo = new FakeHistoryRepo()
     })
 
     describe('p1 wins scenarios', () => {
@@ -15,19 +15,19 @@ describe('playTest', () => {
         })
 
         it('play rock and scissors', () => {
-            let requests = new Requests(spyRepo)
+            let requests = new Requests(fakeRepo)
             requests.play('rock', 'scissors', observer)
             expect(observer.p1Wins).toHaveBeenCalled()
         })
 
         it('play paper and rock', () => {
-            let requests = new Requests(spyRepo)
+            let requests = new Requests(fakeRepo)
             requests.play('paper', 'rock', observer)
             expect(observer.p1Wins).toHaveBeenCalled()
         })
 
         it('play scissors and paper', () => {
-            let requests = new Requests(spyRepo)
+            let requests = new Requests(fakeRepo)
             requests.play('scissors', 'paper', observer)
             expect(observer.p1Wins).toHaveBeenCalled()
         })
@@ -38,19 +38,19 @@ describe('playTest', () => {
         })
 
         it('play scissors and rock', () => {
-            let requests = new Requests(spyRepo)
+            let requests = new Requests(fakeRepo)
             requests.play('scissors', 'rock', observer)
             expect(observer.p2Wins).toHaveBeenCalled()
         })
 
         it('play rock and paper', () => {
-            let requests = new Requests(spyRepo)
+            let requests = new Requests(fakeRepo)
             requests.play('rock', 'paper', observer)
             expect(observer.p2Wins).toHaveBeenCalled()
         })
 
         it('play paper and scissors', () => {
-            let requests = new Requests(spyRepo)
+            let requests = new Requests(fakeRepo)
             requests.play('paper', 'scissors', observer)
             expect(observer.p2Wins).toHaveBeenCalled()
         })
@@ -62,19 +62,19 @@ describe('playTest', () => {
         })
 
         it('both play scissors', () => {
-            let requests = new Requests(spyRepo)
+            let requests = new Requests(fakeRepo)
             requests.play('scissors', 'scissors', observer)
             expect(observer.draw).toHaveBeenCalled()
         })
 
         it('both play rock', () => {
-            let requests = new Requests(spyRepo)
+            let requests = new Requests(fakeRepo)
             requests.play('rock', 'rock', observer)
             expect(observer.draw).toHaveBeenCalled()
         })
 
         it('both play paper', () => {
-            let requests = new Requests(spyRepo)
+            let requests = new Requests(fakeRepo)
             requests.play('rock', 'rock', observer)
             expect(observer.draw).toHaveBeenCalled()
         })
@@ -86,13 +86,13 @@ describe('playTest', () => {
         })
 
         it('play inoshishi', () => {
-            let requests = new Requests(spyRepo)
+            let requests = new Requests(fakeRepo)
             requests.play('scissors', 'inoshishi', observer)
             expect(observer.noGame).toHaveBeenCalled()
         })
 
         it('play random', () => {
-            let requests = new Requests(spyRepo)
+            let requests = new Requests(fakeRepo)
             requests.play('scissors', Math.random().toString(), observer)
             expect(observer.noGame).toHaveBeenCalled()
         })
@@ -105,51 +105,51 @@ describe('playTest', () => {
         })
 
         it('saves an invalid game result', () => {
-            let requests = new Requests(spyRepo)
+            let requests = new Requests(fakeRepo)
 
 
             requests.play('scissors', 'inoshishi', observer)
 
 
-            expect(spyRepo.save).toHaveBeenCalledWith(
+            expect(fakeRepo.getAll()).toEqual([
                 new Round('scissors', 'inoshishi', 'No Game')
-            )
+            ])
         })
 
         it('saves a Player 1 Wins game result', () => {
-            let requests = new Requests(spyRepo)
+            let requests = new Requests(fakeRepo)
 
 
             requests.play('scissors', 'paper', observer)
 
 
-            expect(spyRepo.save).toHaveBeenCalledWith(
+            expect(fakeRepo.getAll()).toEqual([
                 new Round('scissors', 'paper', 'Player 1 Wins')
-            )
+            ])
         })
 
         it('saves a Player 2 Wins game result', () => {
-            let requests = new Requests(spyRepo)
+            let requests = new Requests(fakeRepo)
 
 
             requests.play('paper', 'scissors', observer)
 
 
-            expect(spyRepo.save).toHaveBeenCalledWith(
+            expect(fakeRepo.getAll()).toEqual([
                 new Round('paper', 'scissors', 'Player 2 Wins')
-            )
+            ])
         })
 
         it('saves a draw game result', () => {
-            let requests = new Requests(spyRepo)
+            let requests = new Requests(fakeRepo)
 
 
             requests.play('paper', 'paper', observer)
 
 
-            expect(spyRepo.save).toHaveBeenCalledWith(
+            expect(fakeRepo.getAll()).toEqual([
                 new Round('paper', 'paper', 'Draw')
-            )
+            ])
         })
     })
 })

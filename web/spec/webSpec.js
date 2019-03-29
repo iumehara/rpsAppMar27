@@ -2,6 +2,7 @@ import ReactDOM from "react-dom"
 import React from 'react'
 import PlayForm from "../src/PlayForm";
 import ReactTestUtils from 'react-dom/test-utils'
+import {Round} from "rps";
 
 describe('RPS App', function () {
   let domFixture
@@ -75,6 +76,20 @@ describe('RPS App', function () {
     domFixture.querySelector('button').click()
 
     expect(domFixture.innerText).toContain('No Game!')
+  })
+
+  it('displays History when history button is clicked', () => {
+    const drawStub = {
+      fetchRounds: (observer) => {
+        observer.rounds([ new Round('scissors', 'paper', 'Player 1 Wins') ]);
+      }
+    }
+    renderPlayForm(drawStub)
+
+    expect(domFixture.innerText).not.toContain('Player 1 Wins')
+    domFixture.querySelector('button.history').click()
+
+    expect(domFixture.innerText).toContain('Player 1 Wins')
   })
 
   it('sends p1 hand and p2 hand to play', () => {
